@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+    container_name: realworld-nextjs-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: ../backend.Dockerfile
+    container_name: realworld-adonis-prod
+    ports:
+      - "3333:3333"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3333
+    volumes:
+      - backend_data:/app/database
+
+volumes:
+  backend_data:
